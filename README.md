@@ -1,9 +1,8 @@
 
 
-# Discord bot template
+# Discord film bot
 ## tl;dr
-This is a code template that will help you build a Discord bot in a quick and elegant way. You just have to tweak a few settings to your liking, add your commands, and you'll be ready to go.
-
+This is a discord bot built from a template from github (see link below). 
 Adding new commands or temporal events is as simple as inheriting from an abstract class, which helps to keeping everything clean and simple.
 
 Check [example_command.py](https://github.com/agubelu/discord-bot-template/blob/master/commands/example_command.py) and [example_event.py](https://github.com/agubelu/discord-bot-template/blob/master/events/example_event.py) for an example on how to implement commands and events, or keep reading for more detailed info.
@@ -24,8 +23,11 @@ You can edit the following parameters in the `settings.py` file:
 - **BASE_DIR**: This isn't really a setting, but you can use to build relative paths inside your code. It points to the directory where the settings file itself is stored.
 
 # Running your bot
-Just run `python your_bot.py` and everything should work just fine if all dependencies are met. Of course, you can rename `your_bot.py` to anything you want.
+The bot can be either deployed locally or on a remote host. To deploy the bot locally you must have the pre-requisites, set your BOT_TOKEN in the settings.py file, and then run 'python your_bot.py'
 
+To deploy the bot in a remote host, ssh into the remote machine (linux) then run the 'deploy.sh' file from this repo (you can use scp or just copy paste if you prefer). This will clone the repo and install the pre-requisites. At this point you want to update the 'BOT_TOKEN' for your specific account
+Next, you need to set the bot running silently. The way I prefer to do this is be using the 'screen' command. Type 'screen' into the terminal and then afterwards type 'python your_bot.py' finally press control+a+d to detatch the session. 
+You can now safely disconnect from the remote host.
 # Adding commands
 Having all of your commands in a single file (or maybe even a single *switch*) gets ugly quickly as you start adding commands. We all know it makes for messy, often redundant code.
 
