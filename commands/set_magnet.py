@@ -1,8 +1,11 @@
-from commands.base_command  import BaseCommand
-import settings
-import os, io
+import io
 import json
-from datetime import datetime
+import os
+
+import settings
+from commands.base_command import BaseCommand
+
+
 # Your friendly example event
 # Keep in mind that the command name will be derived from the class name
 # but in lowercase
@@ -31,8 +34,8 @@ class SetMagnet(BaseCommand):
         # 'client' is the bot Client object
 
         film_deets = self.set_magnet(params[0])
-        msg = "@here \n\nWith or without you we will be watching {film_name} on {film_date} at {film_time}.\n " \
-              "You might be able to find the film here:\n {film_magnet}".format(**film_deets)
+        msg = "{role} \n\nLink has been added for {film_name}:\n " \
+              "```{film_magnet}```".format(role=settings.AUDIENCE, **film_deets)
         await client.send_message(message.channel, msg)
 
     def get_film_deets(self):
