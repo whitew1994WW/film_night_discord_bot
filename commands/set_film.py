@@ -50,7 +50,5 @@ class SetFilm(BaseCommand):
 
         with io.open(self.save_dict_location, 'w') as f:
             f.write(json.dumps(film_details))
-
-
-
-        return "Film details stored successfully"
+        return "@here \n\nWith or without you we will be watching {film_name} on {film_date} at {film_time}.\n " \
+              "You might be able to find the film here:\n {film_magnet}".format(**film_details)
