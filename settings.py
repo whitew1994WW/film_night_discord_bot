@@ -11,7 +11,7 @@ COMMAND_PREFIX = "!frodo"
 AUDIENCE = "<@&552462297487114241>"  # the group
 
 # The bot token. Keep this secret!
-BOT_TOKEN = "NzI2ODMwMjM2MjM0NDE2MTQz.XvtWJA.O0spz4aGghIQUsCxHh71u0elyBE"
+BOT_TOKEN = ""
 
 # The now playing game. Set this to anything false-y ("", None) to disable it
 NOW_PLAYING = "with my human underlings"
