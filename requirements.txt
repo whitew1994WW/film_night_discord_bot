@@ -1,5 +1,5 @@
 aiohttp==3.6.2
-APScheduler==3.5.1
+apscheduler==3.5.1
 async-timeout==3.0.1
 attrs==19.3.0
 chardet==3.0.4

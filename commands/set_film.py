@@ -22,6 +22,8 @@ class SetFilm(BaseCommand):
         # If no params are expected, leave this list empty or set it to None
         params = ["Film Name", "Film date", "Film current Time", 'Film magnet']
         self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
+        self.save_embdict_location = os.path.join(settings.BASE_DIR, 'data', 'embed_file.json')
+        self.save_magnet_location = os.path.join(settings.BASE_DIR, 'data', 'magnet.json')
         super().__init__(description, params)
 
     # Override the handle() method
@@ -32,11 +34,13 @@ class SetFilm(BaseCommand):
         # parameters as specified in __init__
         # 'message' is the discord.py Message object for the command to handle
         # 'client' is the bot Client object
+        self.embed_gen(params)
         msg = self.store_films(params)
 
         await message.channel.send(msg)
 
     def store_films(self, params):
+
         film_details = {'film_name': str(params[0]), 'film_magnet': str(params[3])}
         print(params)
         try:
@@ -53,5 +57,25 @@ class SetFilm(BaseCommand):
 
         with io.open(self.save_dict_location, 'w') as f:
             f.write(json.dumps(film_details))
-        return "{role} \n\nWith or without you we will be watching {film_name} on {film_date} at {film_time}.\n " \
+        return "{role} \n\n{film_name} is scheduled {film_date} at {film_time}.\n " \
                "You might be able to find the film here:\n {film_magnet}".format(role=settings.AUDIENCE, **film_details)
+
+    def embed_gen(self, params):
+
+        # Open the prebuilt embedding jsons and set the user inputs to a the dic
+        with open(self.save_embdict_location, 'r') as f:
+            embed_dic = json.load(f)
+        # Title
+        embed_dic["title"] = str(params[0])
+        # Time and Date
+        embed_dic["fields"][0]["value"] = "{} - {}".format(str(params[2]), str(params[1]))
+        # Write the dic back to json file
+        with open(self.save_embdict_location, 'w') as f:
+            f.write(json.dumps(embed_dic))
+
+        # magnet json
+        with open(self.save_magnet_location, 'r') as f:
+            magnet_dic = json.load(f)
+        magnet_dic["description"] = "```{}```".format(str(params[3]))
+        with open(self.save_magnet_location, 'w') as f:
+            f.write(json.dumps(magnet_dic))

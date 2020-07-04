@@ -1,7 +1,9 @@
-from commands.base_command  import BaseCommand
+from commands.base_command import BaseCommand
 import settings
 import os
 import json
+import discord
+
 
 # Keep in mind that the command name will be derived from the class name
 # but in lowercase
@@ -18,6 +20,8 @@ class GetFilm(BaseCommand):
         params = []
         # If no params are expected, leave this list empty or set it to None
         self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
+        self.save_embdict_location = os.path.join(settings.BASE_DIR, 'data', 'embed_file.json')
+        self.save_magnet_location = os.path.join(settings.BASE_DIR, 'data', 'magnet.json')
         super().__init__(description, params)
 
     # Override the handle() method
@@ -29,12 +33,18 @@ class GetFilm(BaseCommand):
         # 'message' is the discord.py Message object for the command to handle
         # 'client' is the bot Client object
 
-        film_deets = self.get_film_deets()
-        msg = "{role} \n\nWith or without you we will be watching {film_name} on {film_date} at {film_time}.\n " \
-              "You might be able to find the film here:\n {film_magnet}".format(role=settings.AUDIENCE, **film_deets)
-        await message.channel.send(msg)
+        # bot reply
+        embedded_messages = self.get_film_info()
+        # sends film info and magnet link
+        for emb_mes in embedded_messages:
+            await message.channel.send(embed=emb_mes)
 
-    def get_film_deets(self):
-        with open(self.save_dict_location) as f:
-            film_deets = json.load(f)
-        return film_deets
+    def get_film_info(self):
+        # pull film info from data files
+        with open(self.save_embdict_location) as f:
+            film_info = json.load(f)
+        with open(self.save_magnet_location) as f:
+            magnet = json.load(f)
+
+        # return list of embed objects
+        return [discord.Embed.from_dict(film_info), discord.Embed.from_dict(magnet)]
