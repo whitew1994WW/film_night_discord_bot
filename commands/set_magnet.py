@@ -36,7 +36,7 @@ class SetMagnet(BaseCommand):
         film_deets = self.set_magnet(params[0])
         msg = "{role} \n\nLink has been added for {film_name}:\n " \
               "```{film_magnet}```".format(role=settings.AUDIENCE, **film_deets)
-        await client.send_message(message.channel, msg)
+        await message.channel.send(msg)
 
     def get_film_deets(self):
         with open(self.save_dict_location) as f:

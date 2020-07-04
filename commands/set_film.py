@@ -34,7 +34,7 @@ class SetFilm(BaseCommand):
         # 'client' is the bot Client object
         msg = self.store_films(params)
 
-        await client.send_message(message.channel, msg)
+        await message.channel.send(msg)
 
     def store_films(self, params):
         film_details = {'film_name': str(params[0]), 'film_magnet': str(params[3])}
