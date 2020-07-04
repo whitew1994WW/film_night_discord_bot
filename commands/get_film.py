@@ -17,12 +17,6 @@ class GetFilm(BaseCommand):
 
     async def handle(self, params, message, client):
 
-        # 'params' is a list that contains the parameters that the command 
-        # expects to receive, t is guaranteed to have AT LEAST as many
-        # parameters as specified in __init__
-        # 'message' is the discord.py Message object for the command to handle
-        # 'client' is the bot Client object
-
         # bot reply
         embedded_messages = self.get_film_info()
         # sends film info and magnet link
