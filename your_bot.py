@@ -19,23 +19,20 @@ this.running = False
 sched = AsyncIOScheduler()
 
 
-###############################################################################
-
 def main():
-    # Initialize the client
     print("Starting up...")
     client = discord.Client()
-    # Define event handlers for the client
-    # on_ready may be called multiple times in the event of a reconnect,
-    # hence the running flag
+
     @client.event
     async def on_ready():
+        """on_ready may be called multiple times in the event of a reconnect,
+        hence the running flag
+        """
         if this.running:
             return
 
         this.running = True
 
-        # Set the playing status
         if settings.NOW_PLAYING:
             print("Setting NP game", flush=True)
             await client.change_presence(
@@ -43,7 +40,6 @@ def main():
             )
         print("Logged in!", flush=True)
 
-        # Load all events
         print("Loading events...", flush=True)
         n_ev = 0
         for ev in BaseEvent.__subclasses__():
@@ -54,10 +50,11 @@ def main():
         sched.start()
         print(f"{n_ev} events loaded", flush=True)
 
-    # The message handler for both new message and edits
     async def common_handle_message(message):
+        """The message handler for both new message and edits"""
         text = message.content
-        if text.startswith(settings.COMMAND_PREFIX) and text != settings.COMMAND_PREFIX:
+        if (text.startswith(settings.COMMAND_PREFIX)
+                and text != settings.COMMAND_PREFIX):
             cmd_split = shlex.split(text[len(settings.COMMAND_PREFIX):])
             try:
                 await message_handler.handle_command(cmd_split[0].lower(),
@@ -72,12 +69,10 @@ def main():
 
     @client.event
     async def on_message_edit(before, after):
+        """Edited messages will be re-sent to the bot"""
         await common_handle_message(after)
 
-    # Finally, set the bot running
     client.run(settings.BOT_TOKEN)
-
-###############################################################################
 
 
 if __name__ == "__main__":
