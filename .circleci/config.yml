@@ -1,0 +1,30 @@
+
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.1
+      
+    working_directory: ~/environment/hello-python-CI
+    
+    steps:
+      - checkout
+      
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-
+          
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make install
+      
+      - run:
+          name: run lint
+          command: |
+            . venv/bin/activate
+            make lint
