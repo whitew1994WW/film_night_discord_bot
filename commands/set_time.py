@@ -37,7 +37,7 @@ class SetTime(BaseCommand):
         film_deets = self.set_time(params[0])
         msg = "{role} \n\n{film_name} has been set for {film_date}" \
               "at {film_time}.\n ".format(role=settings.AUDIENCE, **film_deets)
-        await client.send_message(message.channel, msg)
+        await message.channel.send(msg)
 
     def get_film_deets(self):
         with open(self.save_dict_location) as f:

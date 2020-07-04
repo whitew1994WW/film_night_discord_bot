@@ -32,7 +32,7 @@ class GetFilm(BaseCommand):
         film_deets = self.get_film_deets()
         msg = "{role} \n\nWith or without you we will be watching {film_name} on {film_date} at {film_time}.\n " \
               "You might be able to find the film here:\n {film_magnet}".format(role=settings.AUDIENCE, **film_deets)
-        await client.send_message(message.channel, msg)
+        await message.channel.send(msg)
 
     def get_film_deets(self):
         with open(self.save_dict_location) as f:

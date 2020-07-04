@@ -6,9 +6,9 @@ import message_handler
 import shlex
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from events.base_event              import BaseEvent
-from events                         import *
-from multiprocessing                import Process
+from events.base_event import BaseEvent
+from events import *
+from multiprocessing import Process
 
 # Set to remember if the bot is already running, since on_ready may be called
 # more than once on reconnects
@@ -25,7 +25,6 @@ def main():
     # Initialize the client
     print("Starting up...")
     client = discord.Client()
-
     # Define event handlers for the client
     # on_ready may be called multiple times in the event of a reconnect,
     # hence the running flag
@@ -40,7 +39,8 @@ def main():
         if settings.NOW_PLAYING:
             print("Setting NP game", flush=True)
             await client.change_presence(
-                game=discord.Game(name=settings.NOW_PLAYING))
+                activity=discord.Game(name=settings.NOW_PLAYING)
+            )
         print("Logged in!", flush=True)
 
         # Load all events
@@ -48,7 +48,7 @@ def main():
         n_ev = 0
         for ev in BaseEvent.__subclasses__():
             event = ev()
-            sched.add_job(event.run, 'interval', (client,), 
+            sched.add_job(event.run, 'interval', (client,),
                           minutes=event.interval_minutes)
             n_ev += 1
         sched.start()
@@ -60,8 +60,8 @@ def main():
         if text.startswith(settings.COMMAND_PREFIX) and text != settings.COMMAND_PREFIX:
             cmd_split = shlex.split(text[len(settings.COMMAND_PREFIX):])
             try:
-                await message_handler.handle_command(cmd_split[0].lower(), 
-                                      cmd_split[1:], message, client)
+                await message_handler.handle_command(cmd_split[0].lower(),
+                                                     cmd_split[1:], message, client)
             except:
                 print("Error while handling message", flush=True)
                 raise
