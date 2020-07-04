@@ -23,7 +23,6 @@ class SetFilm(BaseCommand):
         params = ["Film Name", "Film date", "Film current Time", 'Film magnet']
         self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
         self.save_embdict_location = os.path.join(settings.BASE_DIR, 'data', 'embed_file.json')
-        self.save_magnet_location = os.path.join(settings.BASE_DIR, 'data', 'magnet.json')
         super().__init__(description, params)
 
     # Override the handle() method
@@ -73,9 +72,3 @@ class SetFilm(BaseCommand):
         with open(self.save_embdict_location, 'w') as f:
             f.write(json.dumps(embed_dic))
 
-        # magnet json
-        with open(self.save_magnet_location, 'r') as f:
-            magnet_dic = json.load(f)
-        magnet_dic["description"] = "```{}```".format(str(params[3]))
-        with open(self.save_magnet_location, 'w') as f:
-            f.write(json.dumps(magnet_dic))

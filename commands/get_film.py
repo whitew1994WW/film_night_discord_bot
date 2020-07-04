@@ -21,7 +21,6 @@ class GetFilm(BaseCommand):
         # If no params are expected, leave this list empty or set it to None
         self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
         self.save_embdict_location = os.path.join(settings.BASE_DIR, 'data', 'embed_file.json')
-        self.save_magnet_location = os.path.join(settings.BASE_DIR, 'data', 'magnet.json')
         super().__init__(description, params)
 
     # Override the handle() method
@@ -36,15 +35,12 @@ class GetFilm(BaseCommand):
         # bot reply
         embedded_messages = self.get_film_info()
         # sends film info and magnet link
-        for emb_mes in embedded_messages:
-            await message.channel.send(embed=emb_mes)
+        await message.channel.send(embed=embedded_messages)
 
     def get_film_info(self):
         # pull film info from data files
         with open(self.save_embdict_location) as f:
             film_info = json.load(f)
-        with open(self.save_magnet_location) as f:
-            magnet = json.load(f)
 
         # return list of embed objects
-        return [discord.Embed.from_dict(film_info), discord.Embed.from_dict(magnet)]
+        return discord.Embed.from_dict(film_info)
