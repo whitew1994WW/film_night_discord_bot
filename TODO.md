@@ -16,9 +16,13 @@
 - [ ] Reminder
     - [ ] Tag ticket owners in in channel 1 day/ 1 hour before film
     - [ ] Direct message ticket owners
+- [ ] Multiple film support, unique jsons
+    - [ ] Auto deletes film a day after the event
 - [ ] Google Sheets integration
 - [ ] Calendar integration
     ###### Create a calendar object that people can use to create an event in whicever service they want 
-- [ ] Pause/Play countdown timer
-- [ ] Allow for multiple channels to use the bot
+- [ ] Pause/Play countdown timer, for non syncplay users
 - [ ] Bot init/config, asks which roles to mention in messages
+- [X] Migrate to discord.py v1.3
+- [ ] Refactor commands
+- [ ] Allow for multiple channels to use the bot
