@@ -1,8 +1,11 @@
-from commands.base_command  import BaseCommand
-from datetime import datetime
+import io
 import json
-import os, io
+import os
+from datetime import datetime
+
 import settings
+from commands.base_command import BaseCommand
+
 
 # Your friendly example event
 # Keep in mind that the command name will be derived from the class name
@@ -50,5 +53,5 @@ class SetFilm(BaseCommand):
 
         with io.open(self.save_dict_location, 'w') as f:
             f.write(json.dumps(film_details))
-        return "@here \n\nWith or without you we will be watching {film_name} on {film_date} at {film_time}.\n " \
-              "You might be able to find the film here:\n {film_magnet}".format(**film_details)
+        return "{role} \n\nWith or without you we will be watching {film_name} on {film_date} at {film_time}.\n " \
+               "You might be able to find the film here:\n {film_magnet}".format(role=settings.AUDIENCE, **film_details)
