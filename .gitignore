@@ -102,5 +102,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# secrets (eg. token)
+secrets.py
 
 # End of https://www.gitignore.io/api/python
