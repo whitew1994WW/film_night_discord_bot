@@ -1,1 +1,28 @@
-{"title": "Bad Boys 2", "description": "**year**\n\nShort film description", "url": "https://www.filmsimdb.com", "color": 12582868, "fields": [{"name": "Scheduled for:", "value": "2:00 PM GMT - 17/07/2020"}], "image": {"url": "https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673-960x960.png"}, "thumbnail": {"url": "https://i.pinimg.com/originals/2e/00/76/2e00766ced490a713170272edbb51c3b.png"}}
+{
+  "title": "Eyes wide shut",
+  "description": "**1999**\n\nA New York City doctor embarks on a harrowing, night-long odyssey of sexual and moral discovery after his wife reveals a painful secret to him.\n\n*Director: Stanley Kubrick*\n",
+  "url": "https://www.imdb.com/title/tt0120663/",
+  "color": 8454144,
+  "fields": [
+    {
+      "name": "IMDB",
+      "value": "7.4/10",
+      "inline": true
+    },
+    {
+      "name": "RT",
+      "value": "75%",
+      "inline": true
+    },
+    {
+      "name": "Scheduled for:",
+      "value": "2:00 PM GMT - 06/07/2020"
+    }
+  ],
+  "image": {
+    "url": "https://m.media-amazon.com/images/M/MV5BMjA5NTUwNjI1N15BMl5BanBnXkFtZTYwOTE1ODc5._V1_SX300.jpg"
+  },
+  "thumbnail": {
+    "url": "https://i.pinimg.com/originals/2e/00/76/2e00766ced490a713170272edbb51c3b.png"
+  }
+}

@@ -1,12 +1,14 @@
 import io
 import json
 import os
+import requests
 from datetime import datetime
 
 import settings
 from commands.base_command import BaseCommand
 
-
+KEY = 'a445191a'
+INFO_URL = 'http://www.omdbapi.com/?t={movie}&apikey={key}&'
 
 class SetFilm(BaseCommand):
     def __init__(self):
@@ -42,19 +44,39 @@ class SetFilm(BaseCommand):
 
         with io.open(self.save_dict_location, 'w') as f:
             f.write(json.dumps(film_details))
-        return "{role} \n\n{film_name} is scheduled {film_date} at {film_time}.\n " \
-               "You might be able to find the film here:\n {film_magnet}".format(role=settings.AUDIENCE, **film_details)
+        return "{role} \n\n{film_name} is scheduled for {film_date} at {film_time}".format(role=settings.AUDIENCE, **film_details)
 
     def embed_gen(self, params):
+        # Pull film data from OMDb
+        OMDb_data = self.get_OMDb_data(params[0].replace(" ","+"))
 
         # Open the prebuilt embedding jsons and set the user inputs to a the dic
         with open(self.save_embdict_location, 'r') as f:
             embed_dic = json.load(f)
         # Title
         embed_dic["title"] = str(params[0])
+        # url
+        embed_dic["url"] = "https://www.imdb.com/title/{}/".format(OMDb_data["imdbID"])
+        # Year, Director and Summary
+        embed_dic["description"] = "**{}**\n\n{}\n\n*Director: {}*\n".format(OMDb_data["Year"],OMDb_data["Plot"],OMDb_data["Director"])
+        # Ratings
+        for i in range(2):
+            embed_dic["fields"][i]["value"] = OMDb_data["Ratings"][i]["Value"]
+        #embed_dic["fields"][1]["value"] = OMDb_data["Ratings"][1]["Value"]
         # Time and Date
-        embed_dic["fields"][0]["value"] = "{} - {}".format(str(params[2]), str(params[1]))
+        embed_dic["fields"][2]["value"] = "{} - {}".format(str(params[2]), str(params[1]))
+        # Image
+        embed_dic["image"]["url"] = OMDb_data["Poster"]
         # Write the dic back to json file
         with open(self.save_embdict_location, 'w') as f:
-            f.write(json.dumps(embed_dic))
+            f.write(json.dumps(embed_dic, indent= 2))
+
+    # API Request from OMDb
+    def get_OMDb_data(self,film):
+
+        def get_json(url):
+            r = requests.get(url)
+            return r.json()
+
+        return get_json(INFO_URL.format(movie=film,key=KEY))
 

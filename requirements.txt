@@ -9,6 +9,7 @@ idna==2.10
 idna-ssl==1.1.0
 multidict==4.7.6
 pytz==2018.3
+requests==2.24.0
 six==1.11.0
 typing-extensions==3.7.4.2
 tzlocal==1.5.1
