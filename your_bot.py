@@ -2,7 +2,7 @@ import sys
 
 import settings
 import discord
-import message_handler
+import handlers
 import shlex
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -40,6 +40,12 @@ def main():
             )
         print("Logged in!", flush=True)
 
+        # TODO use last channel bot messaged in instead,
+        #  or have global movie night channel
+        await client.get_channel(727105225722429440).send('Logged in!')
+        await client.get_channel(727105225722429440).send("""!frodo setfilm 'Eyes wide shut' 
+        '06/07/2020' '2:00 PM GMT' www.filmmagnet.com""")
+
         print("Loading events...", flush=True)
         n_ev = 0
         for ev in BaseEvent.__subclasses__():
@@ -52,16 +58,24 @@ def main():
 
     async def common_handle_message(message):
         """The message handler for both new message and edits"""
+        # TODO move this to handlers.py
         text = message.content
         if (text.startswith(settings.COMMAND_PREFIX)
                 and text != settings.COMMAND_PREFIX):
             cmd_split = shlex.split(text[len(settings.COMMAND_PREFIX):])
+            print('cmd_split', cmd_split)
             try:
-                await message_handler.handle_command(cmd_split[0].lower(),
+                await handlers.handle_command(cmd_split[0].lower(),
                                                      cmd_split[1:], message, client)
             except:
                 print("Error while handling message", flush=True)
                 raise
+
+    async def common_reaction_handler(reaction, user):
+        """Action upon reactions this bot's film messages"""
+        # TODO move this to handlers.py
+        print(reaction.emoji)
+        await handlers.handle_reaction(reaction, user, client)
 
     @client.event
     async def on_message(message):
@@ -71,6 +85,11 @@ def main():
     async def on_message_edit(before, after):
         """Edited messages will be re-sent to the bot"""
         await common_handle_message(after)
+
+    @client.event
+    async def on_reaction_add(reaction, user):
+        """Assumes the client has filled cached messages"""
+        await common_reaction_handler(reaction, user)
 
     client.run(settings.BOT_TOKEN)
 

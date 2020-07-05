@@ -14,6 +14,3 @@ class BaseCommand:
 
         desc += f": {description}."
         self.description = desc
-
-    async def handle(self, params, message, client):
-        raise NotImplementedError  # To be defined by every command
