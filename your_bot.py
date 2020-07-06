@@ -50,8 +50,6 @@ def main(testing=False):
             #  These are hardcoded for chanel id #
             timestamp = datetime.datetime.now().strftime("%H:%M:%S")
             await client.get_channel(727105225722429440).send(f'Logged in at {timestamp}!')
-            await client.get_channel(727105225722429440).send("""!frodo setfilm 'Eyes wide shut' 
-            '06/07/2020' '2:00 PM GMT' www.filmmagnet.com""")
 
         print("Loading events...", flush=True)
         n_ev = 0
