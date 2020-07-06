@@ -60,8 +60,16 @@ class SetFilm(BaseCommand):
         # Year, Director and Summary
         embed_dic["description"] = "**{}**\n\n{}\n\n*Director: {}*\n".format(OMDb_data["Year"],OMDb_data["Plot"],OMDb_data["Director"])
         # Ratings
-        for i in range(2):
-            embed_dic["fields"][i]["value"] = OMDb_data["Ratings"][i]["Value"]
+        #IMDb
+        try:
+            embed_dic["fields"][0]["value"] = OMDb_data["Ratings"][0]["Value"]
+        except IndexError:
+            embed_dic["fields"][0]["value"] = "No Rating"
+        #RT
+        try:
+            embed_dic["fields"][1]["value"] = OMDb_data["Ratings"][1]["Value"]
+        except IndexError:
+            embed_dic["fields"][1]["value"] = "No Rating"
         # Time and Date
         embed_dic["fields"][2]["value"] = "{} - {}".format(str(params[2]), str(params[1]))
         # Image
@@ -72,9 +80,4 @@ class SetFilm(BaseCommand):
 
     # API Request from OMDb
     def get_OMDb_data(self,film):
-
-        def get_json(url):
-            r = requests.get(url)
-            return r.json()
-
-        return get_json(INFO_URL.format(movie=film,key=KEY))
+        return requests.get(INFO_URL.format(movie=film,key=KEY)).json()
