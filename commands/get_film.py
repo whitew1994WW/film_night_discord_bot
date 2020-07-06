@@ -11,7 +11,6 @@ class GetFilm(BaseCommand):
     def __init__(self):
         description = "Returns the current film details"
         params = []
-        self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
         self.save_embdict_location = os.path.join(settings.BASE_DIR, 'data', 'embed_file.json')
         super().__init__(description, params)
 
