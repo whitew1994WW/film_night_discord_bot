@@ -20,8 +20,7 @@ class BaseCommand:
 
     def get_info(self):
         with open(self.save_dict_location) as f:
-            info = json.load(f)
-        return info
+            return json.load(f)
 
     def set_info(self, info):
         with io.open(self.save_dict_location, 'w') as f:
