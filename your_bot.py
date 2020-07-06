@@ -26,6 +26,13 @@ def main():
     print("Starting up...")
     client = discord.Client()
 
+    # Set bot token
+    try:
+        BOT_TOKEN = sys.argv[1]
+        print(BOT_TOKEN)
+    except KeyError:
+        BOT_TOKEN = settings.BOT_TOKEN
+
     # Define event handlers for the client
     # on_ready may be called multiple times in the event of a reconnect,
     # hence the running flag
@@ -75,7 +82,7 @@ def main():
         await common_handle_message(after)
 
     # Finally, set the bot running
-    client.run(settings.BOT_TOKEN)
+    client.run(BOT_TOKEN)
 
 ###############################################################################
 
