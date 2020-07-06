@@ -21,13 +21,9 @@ class SetTime(BaseCommand):
               "at {film_time}.\n ".format(role=settings.AUDIENCE, **film_deets)
         await message.channel.send(msg)
 
-    def get_film_deets(self):
-        with open(self.save_dict_location) as f:
-            film_deets = json.load(f)
-        return film_deets
-
     def set_time(self, new_time):
-        film_deets = self.get_film_deets()
+        info = self.get_info()
+        embed_dic = self.get_embed()
         try:
             datetime.strptime(new_time, "%I:%M %p %Z")
         except ValueError:

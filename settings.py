@@ -1,7 +1,7 @@
 import os
 from secrets import token
 
-COMMAND_PREFIX = "!mbot"
+COMMAND_PREFIX = "-"
 
 # Which role to mention in comments.
 # Hard coded for testing, with the role ID which can

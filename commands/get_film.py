@@ -17,14 +17,6 @@ class GetFilm(BaseCommand):
     async def handle(self, params, message, client):
 
         # bot reply
-        embedded_messages = self.get_film_info()
+        embedded_messages = discord.Embed.from_dict(self.get_embed())
         # sends film info and magnet link
         await message.channel.send(embed=embedded_messages)
-
-    def get_film_info(self):
-        # pull film info from data files
-        with open(self.save_embdict_location) as f:
-            film_info = json.load(f)
-
-        # return list of embed objects
-        return discord.Embed.from_dict(film_info)

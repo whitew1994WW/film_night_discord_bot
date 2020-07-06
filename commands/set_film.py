@@ -10,74 +10,61 @@ from commands.base_command import BaseCommand
 KEY = 'a445191a'
 INFO_URL = 'http://www.omdbapi.com/?t={movie}&apikey={key}&'
 
+
 class SetFilm(BaseCommand):
     def __init__(self):
         description = "Sets the details for the upcoming movie night"
-        params = ["Film Name", "Film date", "Film current Time", 'Film magnet']
+        params = ['Film Name']
         self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
         self.save_embdict_location = os.path.join(settings.BASE_DIR, 'data', 'embed_file.json')
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
-
-        self.embed_gen(params)
-
-        msg = self.store_films(params)
-
+        film = ' '.join(params).title()
+        nofilm = self.embed_gen(film)
+        if not nofilm:
+            msg = self.store_films(film)
+        else:
+            msg = '{}'.format(nofilm)
         await message.channel.send(msg)
 
-    def store_films(self, params):
+    def store_films(self, film):
 
-        film_details = {'film_name': str(params[0]), 'film_magnet': str(params[3])}
-        print(params)
-        try:
-            datetime.strptime(params[1], "%d/%m/%Y")
+        info = self.get_info()
+        info['film_name'] = film
+        self.set_info(info)
 
-        except ValueError:
-            return "Please provide the date in the format 'DD/MM/YYYY'"
-        film_details['film_date'] = params[1]
-        try:
-            datetime.strptime(params[2], "%I:%M %p %Z")
-        except ValueError:
-            return "Please provide the time in the format '1:00 PM GMT'"
-        film_details['film_time'] = params[2]
+        return "{} \n\nNext film is set to {}".format(settings.AUDIENCE, film)
 
-        with open(self.save_dict_location, 'w') as f:
-            f.write(json.dumps(film_details))
-        return "{role} \n\n{film_name} is scheduled for {film_date} at {film_time}".format(role=settings.AUDIENCE, **film_details)
-
-    def embed_gen(self, params):
+    def embed_gen(self, film):
         # Pull film data from OMDb
-        OMDb_data = self.get_OMDb_data(params[0].replace(" ","+"))
-
-        # Open the prebuilt embedding jsons and set the user inputs to a the dic
-        with open(self.save_embdict_location, 'r') as f:
-            embed_dic = json.load(f)
+        OMDb_data = self.get_OMDb_data(film)
+        if 'Error' in OMDb_data:
+            return OMDb_data['Error']
+        embed_dic = self.get_embed()
         # Title
-        embed_dic["title"] = str(params[0])
-        # url
+        embed_dic["title"] = film
+        # URL
         embed_dic["url"] = "https://www.imdb.com/title/{}/".format(OMDb_data["imdbID"])
         # Year, Director and Summary
-        embed_dic["description"] = "**{}**\n\n{}\n\n*Director: {}*\n".format(OMDb_data["Year"],OMDb_data["Plot"],OMDb_data["Director"])
+        embed_dic["description"] = "**{}**\n\n{}\n\n*Director: {}*\n".format(OMDb_data["Year"], OMDb_data["Plot"], OMDb_data["Director"])
         # Ratings
-        #IMDb
+        # IMDb
         try:
             embed_dic["fields"][0]["value"] = OMDb_data["Ratings"][0]["Value"]
         except IndexError:
             embed_dic["fields"][0]["value"] = "No Rating"
-        #RT
+        # RT
         try:
             embed_dic["fields"][1]["value"] = OMDb_data["Ratings"][1]["Value"]
         except IndexError:
             embed_dic["fields"][1]["value"] = "No Rating"
-        # Time and Date
-        embed_dic["fields"][2]["value"] = "{} - {}".format(str(params[2]), str(params[1]))
         # Image
         embed_dic["image"]["url"] = OMDb_data["Poster"]
-        # Write the dic back to json file
-        with open(self.save_embdict_location, 'w') as f:
-            f.write(json.dumps(embed_dic, indent= 2))
+
+        self.set_embed(embed_dic)
 
     # API Request from OMDb
-    def get_OMDb_data(self,film):
-        return requests.get(INFO_URL.format(movie=film,key=KEY)).json()
+    def get_OMDb_data(self, film):
+        r = requests.get(INFO_URL.format(movie=film, key=KEY)).json()
+        return r

@@ -1,15 +1,15 @@
 - [ ] Film Polling
     ###### If anyone wants help with a film suggestion
 - [ ] Film object
-    - [X] Film time set/get
+    - [ ] Film time set/get
     - [X] Film date set/get
-    - [X] Magnet set/get
-    - [ ] Movie details
-        - [ ] trailer
-        - [ ] imdb/rotten tomatoes/wiki
-    - [ ] Film info, returns all information added to film object
-- [ ] Film tickets
+    - [ ] Magnet set/get
+    - [X] Movie details
+        - [X] imdb/rotten tomatoes/wiki
+    - [X] Film info, returns all information added to film object
+    - [ ] Film trailer request
     ###### So we know who wants to attend a film
+- [ ] Film tickets
     - [ ] by adding a reaction to a film post
     - [ ] by using a 'purchase ticket command'
     - [ ] Refund ticket function
