@@ -1,14 +1,16 @@
 import os
+from secrets import token
 
-# The prefix that will be used to parse commands.
-# It doesn't have to be a single character!
-COMMAND_PREFIX = "film_guru"
+COMMAND_PREFIX = "!frodo"
 
-# The bot token. Keep this secret!
-BOT_TOKEN = ""
+# Which role to mention in comments.
+# Hard coded for testing, with the role ID which can
+# be retrieved by typing in discord: \@RequiredRole
+MOVIE_NIGHT_ROLE = "<@&727544315731116083>" # nerd herd
+# AUDIENCE = "<@&552462297487114241>"  # the group
 
-# The now playing game. Set this to anything false-y ("", None) to disable it
-NOW_PLAYING = COMMAND_PREFIX + "commands"
+BOT_TOKEN = token
 
-# Base directory. Feel free to use it if you want.
+NOW_PLAYING = "Artifact with Samwise"
+
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
