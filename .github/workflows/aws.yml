@@ -53,6 +53,6 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: first-run-task-definition:1
+        service: sample-app-service
         cluster: film-bot
         wait-for-service-stability: true
