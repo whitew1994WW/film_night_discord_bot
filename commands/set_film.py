@@ -42,7 +42,7 @@ class SetFilm(BaseCommand):
             return "Please provide the time in the format '1:00 PM GMT'"
         film_details['film_time'] = params[2]
 
-        with io.open(self.save_dict_location, 'w') as f:
+        with open(self.save_dict_location, 'w') as f:
             f.write(json.dumps(film_details))
         return "{role} \n\n{film_name} is scheduled for {film_date} at {film_time}".format(role=settings.AUDIENCE, **film_details)
 
@@ -62,7 +62,6 @@ class SetFilm(BaseCommand):
         # Ratings
         for i in range(2):
             embed_dic["fields"][i]["value"] = OMDb_data["Ratings"][i]["Value"]
-        #embed_dic["fields"][1]["value"] = OMDb_data["Ratings"][1]["Value"]
         # Time and Date
         embed_dic["fields"][2]["value"] = "{} - {}".format(str(params[2]), str(params[1]))
         # Image
@@ -79,4 +78,3 @@ class SetFilm(BaseCommand):
             return r.json()
 
         return get_json(INFO_URL.format(movie=film,key=KEY))
-
