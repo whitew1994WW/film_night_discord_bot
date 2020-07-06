@@ -29,7 +29,6 @@ def main():
     # Set bot token
     try:
         BOT_TOKEN = sys.argv[1]
-        print(BOT_TOKEN)
     except KeyError:
         BOT_TOKEN = settings.BOT_TOKEN
 
