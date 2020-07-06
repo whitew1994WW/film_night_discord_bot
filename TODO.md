@@ -26,3 +26,5 @@
 - [X] Migrate to discord.py v1.3
 - [ ] Refactor commands
 - [ ] Allow for multiple channels to use the bot
+- [ ] Refactor: move parameter & arg check to commands as the command should dictate
+it's own rules for it's parameter requirements

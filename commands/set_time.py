@@ -11,7 +11,6 @@ class SetTime(BaseCommand):
     def __init__(self):
         description = "Updates the time of the film"
         params = ['new_time']
-        self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
@@ -21,11 +20,6 @@ class SetTime(BaseCommand):
               "at {time}.\n ".format(role=settings.MOVIE_NIGHT_ROLE, **info)
         await message.channel.send(msg)
 
-    def get_info(self):
-        with open(self.save_dict_location) as f:
-            info = json.load(f)
-        return info
-
     def set_time(self, new_time):
         info = self.get_info()
         try:
@@ -33,6 +27,5 @@ class SetTime(BaseCommand):
         except ValueError:
             return "Please provide the time in the format '1:00 PM GMT'"
         info['time'] = new_time
-        with io.open(self.save_dict_location, 'w') as f:
-            f.write(json.dumps(info))
+        self.set_info(info)
         return info

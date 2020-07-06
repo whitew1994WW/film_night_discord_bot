@@ -4,6 +4,7 @@ import settings
 import discord
 import handlers
 import shlex
+from utils import get_emoji
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from events.base_event import BaseEvent
@@ -19,7 +20,7 @@ this.running = False
 sched = AsyncIOScheduler()
 
 
-def main():
+def main(testing=False):
     print("Starting up...")
     client = discord.Client()
 
@@ -40,11 +41,17 @@ def main():
             )
         print("Logged in!", flush=True)
 
-        # TODO use last channel bot messaged in instead,
-        #  or have global movie night channel
-        await client.get_channel(727105225722429440).send('Logged in!')
-        await client.get_channel(727105225722429440).send("""!frodo setfilm 'Eyes wide shut' 
-        '06/07/2020' '2:00 PM GMT' www.filmmagnet.com""")
+        # Enter any messages for the bot to send on its login
+        # Really useful for testing
+        if testing:
+            import datetime
+            # TODO use last channel bot messaged in instead,
+            #  or have global movie night channel
+            #  These are hardcoded for chanel id #
+            timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+            await client.get_channel(727105225722429440).send(f'Logged in at {timestamp}!')
+            await client.get_channel(727105225722429440).send("""!frodo setfilm 'Eyes wide shut' 
+            '06/07/2020' '2:00 PM GMT' www.filmmagnet.com""")
 
         print("Loading events...", flush=True)
         n_ev = 0
@@ -66,7 +73,7 @@ def main():
             print('cmd_split', cmd_split)
             try:
                 await handlers.handle_command(cmd_split[0].lower(),
-                                                     cmd_split[1:], message, client)
+                                              cmd_split[1:], message, client)
             except:
                 print("Error while handling message", flush=True)
                 raise
@@ -95,4 +102,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(testing=False)

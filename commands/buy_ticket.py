@@ -21,25 +21,34 @@ class BuyTicket(BaseCommand):
     def __init__(self):
         description = "Adds a user to the audience list"
         params = []
-        self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
+        self.user = None
         super().__init__(description, params)
 
-    async def handle(self, params, message, reaction_user, client):
+    async def handle(self, params, message, client):
         info = self.get_info()
-        user = reaction_user.name
 
+        if self.user is not None:
+            name = self.user.name
+            self.set_user(None)
+        else:
+            name = message.author.name
 
-        if user not in info['audience']:
-            info['audience'] += [user]
-            with io.open(self.save_dict_location, 'w') as f:
-                f.write(json.dumps(info))
+        # TODO add mention user to ticket purchase
+        if name not in info['audience']:
+            info['audience'] += [name]
+            self.set_info(info)
             msg = f"You bought a ticket!\n Ticket holders: {', '.join(info['audience'])}"
         else:
             msg = f"You already has a ticket\n Ticket holders: {', '.join(info['audience'])}"
 
         await message.channel.send(msg)
 
-    def get_info(self):
-        with open(self.save_dict_location) as f:
-            info = json.load(f)
-        return info
+    def set_user(self, user):
+        """This set method allows for this command to be accessed by
+        the reaction handlers. The on_reaction event provides the reaction
+        and the user. The user of the message would be the bot, and we do
+        not want to be adding the bot to the ticket/audience list.
+        So this set_user method will only be required for tickets purchased
+        through reactions."""
+        self.user = user
+        print('Temporary user set as ', self.user)

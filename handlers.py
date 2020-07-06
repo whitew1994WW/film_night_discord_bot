@@ -1,7 +1,7 @@
 from commands.base_command import BaseCommand
 
 from commands import *
-
+from utils import get_user
 import settings
 
 COMMAND_HANDLERS = {c.__name__.lower(): c()
@@ -26,15 +26,15 @@ async def handle_command(command, args, message, bot_client):
 
 async def handle_reaction(reaction, reaction_user, bot_client):
     # Emoji to command
+    # TODO use utils.get_emoji here, it supports the proper magnet emoji
     mapping = {"🎟️": "buyticket",
-               "🔗": "getmagnet"} # '\U0001f9f2' is magnet
-
-
+               "🔗": "getmagnet"}  # '\U0001f9f2' is magnet
 
     if reaction.emoji == "🎟️" and bot_client.user == reaction.message.author:
         cmd_obj = COMMAND_HANDLERS['buyticket']
         # sending this message means BuyTicket.handle reads the bot name, as
         #  the bot was the author of the message people are reaction to
-        await cmd_obj.handle([], reaction.message, reaction_user,  bot_client)
+        cmd_obj.set_user(reaction_user)
+        await cmd_obj.handle([], reaction.message, bot_client)
     else:
         await reaction.message.channel.send(reaction.emoji)

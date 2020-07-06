@@ -11,7 +11,6 @@ class SetFilm(BaseCommand):
     def __init__(self):
         description = "Sets the details for the upcoming movie night"
         params = ["Film Name", "Film date", "Film current Time", 'Film magnet']
-        self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
@@ -34,7 +33,8 @@ class SetFilm(BaseCommand):
         except ValueError:
             return "Please provide the time in the format '1:00 PM GMT'"
         info['time'] = params[2]
-        with io.open(self.save_dict_location, 'w') as f:
-            f.write(json.dumps(info))
+
+        self.set_info(info)
+
         return "{role} \n\nWith or without you we will be watching {name} on {date} at {time}.\n " \
                "You might be able to find the film here:\n {magnet}".format(role=settings.MOVIE_NIGHT_ROLE, **info)
