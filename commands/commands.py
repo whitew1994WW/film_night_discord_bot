@@ -1,8 +1,6 @@
 from commands.base_command import BaseCommand
 
 
-# This is a convenient command that automatically generates a helpful
-# message showing all available commands
 class Commands(BaseCommand):
 
     def __init__(self):
@@ -18,4 +16,4 @@ class Commands(BaseCommand):
         for cmd in sorted(COMMAND_HANDLERS.items()):
             msg += "\n" + cmd[1].description
 
-        await client.send_message(message.channel, msg)
+        await message.channel.send(msg)
