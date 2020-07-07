@@ -31,7 +31,7 @@ class SetFilm(BaseCommand):
         info['name'] = film
         self.set_info(info)
 
-        return "{} \n\nNext film is set to {}".format(settings.AUDIENCE, film)
+        return "{} \n\nNext film is set to {}".format(settings.MOVIE_NIGHT_ROLE, film)
 
     def embed_gen(self, film):
         # Pull film data from OMDb
