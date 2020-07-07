@@ -5,7 +5,7 @@ class Commands(BaseCommand):
 
     def __init__(self):
         description = "Displays this help message"
-        params = None
+        params = []
         super().__init__(description, params)
 
     async def handle(self, params, message, client):

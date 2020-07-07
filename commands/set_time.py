@@ -1,6 +1,3 @@
-import io
-import json
-import os
 from datetime import datetime
 
 import settings
@@ -14,18 +11,27 @@ class SetTime(BaseCommand):
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
-
-        info = self.set_time(params[0])
-        msg = "{role} \n\n{name} has been set for {date}" \
-              "at {time}.\n ".format(role=settings.MOVIE_NIGHT_ROLE, **info)
+      
+        new_time = ' '.join(params)
+        msg = self.set_time(new_time)
         await message.channel.send(msg)
 
     def set_time(self, new_time):
+
         info = self.get_info()
-        try:
-            datetime.strptime(new_time, "%I:%M %p %Z")
-        except ValueError:
-            return "Please provide the time in the format '1:00 PM GMT'"
+        embed_dic = self.get_embed()
+
         info['time'] = new_time
+
+        try:
+            date = info['date']
+        except KeyError:
+            date = '*No date set*'
+
+        embed_dic["fields"][2]["value"] = "{} - {}".format(new_time, date)
+
         self.set_info(info)
-        return info
+        self.set_embed(embed_dic)
+
+        return 'Film is scheduled for {}'.format(new_time)
+

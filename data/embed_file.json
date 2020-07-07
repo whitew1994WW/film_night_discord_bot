@@ -1,0 +1,28 @@
+{
+ "title": "Your Name",
+ "description": "**2016**\n\nTwo strangers find themselves linked in a bizarre way. When a connection forms, will distance be the only thing to keep them apart?\n\n*Director: Makoto Shinkai*\n",
+ "url": "https://www.imdb.com/title/tt5311514/",
+ "color": 3092790,
+ "fields": [
+  {
+   "name": "IMDB",
+   "value": "8.4/10",
+   "inline": true
+  },
+  {
+   "name": "RT",
+   "value": "98%",
+   "inline": true
+  },
+  {
+   "name": "Scheduled for:",
+   "value": "2pm - Thursday 09, Jul 2020"
+  }
+ ],
+ "image": {
+  "url": "https://m.media-amazon.com/images/M/MV5BODRmZDVmNzUtZDA4ZC00NjhkLWI2M2UtN2M0ZDIzNDcxYThjL2ltYWdlXkEyXkFqcGdeQXVyNTk0MzMzODA@._V1_SX300.jpg"
+ },
+ "thumbnail": {
+  "url": "https://i.pinimg.com/originals/2e/00/76/2e00766ced490a713170272edbb51c3b.png"
+ }
+}
