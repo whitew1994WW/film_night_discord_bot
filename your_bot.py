@@ -27,7 +27,7 @@ def main():
     # Set bot token
     try:
         BOT_TOKEN = sys.argv[1]
-    except KeyError:
+    except IndexError:
         BOT_TOKEN = settings.BOT_TOKEN
 
     # Define event handlers for the client
