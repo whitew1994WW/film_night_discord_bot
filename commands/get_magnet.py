@@ -17,22 +17,26 @@ class GetMagnet(BaseCommand):
             name = self.user.name
             if self.user.dm_channel:
                 dm_channel = self.user.dm_channel
+                print(f'dm_channel is available for {name}')
             else:
                 dm_channel = await self.user.create_dm()
+                print(f'No dm_channel available for {name}, create_dm()')
             print('reaction call', name)
             print('reaction call', dm_channel)
             # Cleaning up after a reaction instance of the class
             self.set_user(None)
         else:
             name = message.author.name
-            if self.user.dm_channel:
+            if message.author.dm_channel:
                 dm_channel = message.author.dm_channel
+                print(f'dm_channel is available for {name}')
             else:
                 dm_channel = await message.author.create_dm()
+                print(f'No dm_channel available for {name}, create_dm()')
             print('command call', name)
             print('command call', dm_channel)
 
-        await dm_channel.send(magnet)
+        await dm_channel.send(f"```{magnet}```")
 
     def set_user(self, user):
         """This set_user method will only be required commands we also want

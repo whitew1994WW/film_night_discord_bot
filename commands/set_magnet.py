@@ -1,4 +1,4 @@
-import settings
+from settings import MOVIE_NIGHT_ROLE
 from commands.base_command import BaseCommand
 
 
@@ -9,9 +9,11 @@ class SetMagnet(BaseCommand):
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
-        info = self.set_magnet(params[0])
-        msg = "{role} \n\nLink has been added for {name}:\n " \
-              "```{magnet}```".format(role=settings.MOVIE_NIGHT_ROLE, **info)
+        # Remove trackers from magnet
+        info = self.set_magnet(params[0].split('&tr')[0])
+
+        msg = f"{MOVIE_NIGHT_ROLE} \n\nLink has been added for {info['name']}:\n " \
+              f"```{info['magnet']}```"
         await message.channel.send(msg)
 
     def set_magnet(self, new_magnet):
