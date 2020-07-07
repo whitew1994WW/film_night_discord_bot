@@ -1,7 +1,5 @@
 from commands.base_command import BaseCommand
 import settings
-import os, io
-import json
 from datetime import datetime
 
 

@@ -1,6 +1,5 @@
 import settings
 import json
-import io
 import os
 
 
@@ -23,5 +22,6 @@ class BaseCommand:
             return json.load(f)
 
     def set_info(self, info):
-        with io.open(self.save_dict_location, 'w') as f:
-            f.write(json.dumps(info))
+        with open(self.save_dict_location, 'w') as f:
+            f.write(json.dumps(info, indent=1))
+

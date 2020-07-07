@@ -4,6 +4,7 @@
     - [X] Film time set/get
     - [X] Film date set/get
     - [X] Magnet set/get
+        - [X] React to bot message to get magnet sent through DMs
     - [ ] Movie details
         - [ ] trailer
         - [ ] imdb/rotten tomatoes/wiki
@@ -13,6 +14,7 @@
     - [X] by adding a reaction to a film post
     - [X] by using a 'purchase ticket command'
     - [ ] Refund ticket function: WIP, currently errors loading an empty list back into json
+    - [X] Add reactions to its own bot messages so that a user doesn't have to search for the correct emoji
 - [ ] Reminder
     - [ ] Tag ticket owners in in channel 1 day/ 1 hour before film
     - [ ] Direct message ticket owners
@@ -20,7 +22,7 @@
     - [ ] Auto deletes film a day after the event
 - [ ] Google Sheets integration
 - [ ] Calendar integration
-    ###### Create a calendar object that people can use to create an event in whicever service they want 
+    ###### Create a calendar object that people can use to create an event in whichever service they want 
 - [ ] Pause/Play countdown timer, for non syncplay users
 - [ ] Bot init/config, asks which roles to mention in messages
 - [X] Migrate to discord.py v1.3
@@ -32,3 +34,4 @@
 - [ ] Allow for multiple channels to use the bot
 - [ ] Refactor: move parameter & arg check to commands as the command should dictate
 it's own rules for it's parameter requirements
+- [ ] Update README.md
