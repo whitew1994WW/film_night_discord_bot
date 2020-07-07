@@ -53,6 +53,6 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: sample-app-service
-        cluster: film-bot
+        service: film-bot2
+        cluster: film-bot2
         wait-for-service-stability: true
