@@ -47,11 +47,11 @@ def get_user(message):
     """
     try:
         # see https://discordpy.readthedocs.io/en/latest/api.html#member
-        user = message.author.name
+        name = message.author.name
     except:
         # see https://discordpy.readthedocs.io/en/latest/api.html#user
-        user = message.author.nick
-    return user
+        name = message.author.nick
+    return name
 
 
 def audience_list(names):

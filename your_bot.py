@@ -24,7 +24,6 @@ def main(testing=False):
     print("Starting up...")
     client = discord.Client()
 
-
     # Set bot token
     try:
         BOT_TOKEN = sys.argv[1]
@@ -92,7 +91,6 @@ def main(testing=False):
     async def common_reaction_handler(reaction, user):
         """Action upon reactions this bot's film messages"""
         # TODO move this to handlers.py
-        print(reaction.emoji)
         await handlers.handle_reaction(reaction, user, client)
 
     @client.event
@@ -104,14 +102,12 @@ def main(testing=False):
         """Edited messages will be re-sent to the bot"""
         await common_handle_message(after)
 
-
     @client.event
     async def on_reaction_add(reaction, user):
         """Assumes the client has filled cached messages"""
         await common_reaction_handler(reaction, user)
 
     client.run(settings.BOT_TOKEN)
-
 
 
 if __name__ == "__main__":

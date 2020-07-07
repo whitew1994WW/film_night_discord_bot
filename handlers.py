@@ -26,15 +26,18 @@ async def handle_command(command, args, message, bot_client):
 
 async def handle_reaction(reaction, reaction_user, bot_client):
     # Emoji to command
-    # TODO use utils.get_emoji here, it supports the proper magnet emoji
-    mapping = {"🎟️": "buyticket",
-               "🔗": "getmagnet"}  # '\U0001f9f2' is magnet
+    # WARNING
+    # There the key for the "getmagnet" value does not render on PyCharm,
+    # but there is actually a magnet emoji there. Be careful editing.
+    mapping = {"🎟": "buyticket",  # tickets
+               "🧲": "getmagnet"}  # magnet, does PyCharm not render this?
 
-    if reaction.emoji == "🎟️" and bot_client.user == reaction.message.author:
-        cmd_obj = COMMAND_HANDLERS['buyticket']
+    if  reaction_user != bot_client.user and reaction.message.author == bot_client.user:
+        cmd_obj = COMMAND_HANDLERS[mapping[str(reaction.emoji)]]
         # sending this message means BuyTicket.handle reads the bot name, as
         #  the bot was the author of the message people are reaction to
         cmd_obj.set_user(reaction_user)
         await cmd_obj.handle([], reaction.message, bot_client)
-    else:
-        await reaction.message.channel.send(reaction.emoji)
+
+    # else:
+    #     await reaction.message.channel.send(reaction.emoji)

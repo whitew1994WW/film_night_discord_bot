@@ -1,7 +1,3 @@
-import io
-import json
-import os
-
 import settings
 from commands.base_command import BaseCommand
 

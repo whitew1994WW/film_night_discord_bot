@@ -1,7 +1,5 @@
 from commands.base_command import BaseCommand
-import settings
-import os
-import json
+import discord
 
 
 class GetFilm(BaseCommand):
@@ -13,6 +11,8 @@ class GetFilm(BaseCommand):
 
     async def handle(self, params, message, client):
         info = self.get_info()
-        msg = "{role} \n\nWith or without you we will be watching {name} on {date} at {time}.\n " \
-              "You might be able to find the film here:\n {magnet}".format(role=settings.MOVIE_NIGHT_ROLE, **info)
-        await message.channel.send(msg)
+        channel = message.channel
+        msg = "<Placeholder for Bill's embeds> \n Please click the ticket to sign up to updates for this film"
+        bot_message = await channel.send(msg)
+        await discord.Message.add_reaction(bot_message, u"\U0001F39F")
+        await discord.Message.add_reaction(bot_message, u"\U0001F9F2")
