@@ -1,37 +1,79 @@
+import os
+import requests
+
 from datetime import datetime
 
 import settings
 from commands.base_command import BaseCommand
 
+KEY = 'a445191a'
+INFO_URL = 'http://www.omdbapi.com/?t={movie}&apikey={key}&'
+INFO_YEAR_URL = 'http://www.omdbapi.com/?t={movie}&y={year}&apikey={key}&'
 
 class SetFilm(BaseCommand):
     def __init__(self):
         description = "Sets the details for the upcoming movie night"
-        params = ["Film Name", "Film date", "Film current Time", 'Film magnet']
+        params = ['Film Name']
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
-        msg = self.store_films(params)
-
+        film = ' '.join(params).title()
+        nofilm = self.embed_gen(film)
+        if not nofilm:
+            msg = self.store_films(film)
+        else:
+            msg = '{}'.format(nofilm)
         await message.channel.send(msg)
 
-    def store_films(self, params):
-        # TODO only require a film name to initialise a movie night
-        info = {'name': str(params[0]), 'magnet': str(params[3]), 'audience': []}
-        print(params)
-        try:
-            datetime.strptime(params[1], "%d/%m/%Y")
+    def store_films(self, film):
 
-        except ValueError:
-            return "Please provide the date in the format 'DD/MM/YYYY'"
-        info['date'] = params[1]
-        try:
-            datetime.strptime(params[2], "%I:%M %p %Z")
-        except ValueError:
-            return "Please provide the time in the format '1:00 PM GMT'"
-        info['time'] = params[2]
-
+        info = self.get_info()
+        info['name'] = film
         self.set_info(info)
 
-        return "{role} \n\nWith or without you we will be watching {name} on {date} at {time}.\n " \
-               "You might be able to find the film here:\n {magnet}".format(role=settings.MOVIE_NIGHT_ROLE, **info)
+        return "{} \n\nNext film is set to {}".format(settings.AUDIENCE, film)
+
+    def embed_gen(self, film):
+        # Pull film data from OMDb
+        OMDb_data = self.get_OMDb_data(film)
+        if 'Error' in OMDb_data:
+            return OMDb_data['Error']
+        embed_dic = self.get_embed()
+        # Title
+        embed_dic["title"] = ' '.join(film.split()[:-1])
+        # URL
+        embed_dic["url"] = "https://www.imdb.com/title/{}/".format(OMDb_data["imdbID"])
+        # Year, Director and Summary
+        embed_dic["description"] = "**{}**\n\n{}\n\n*Director: {}*\n".format(OMDb_data["Year"], OMDb_data["Plot"], OMDb_data["Director"])
+        # Ratings
+        # IMDb
+        try:
+            embed_dic["fields"][0]["value"] = OMDb_data["Ratings"][0]["Value"]
+        except IndexError:
+            embed_dic["fields"][0]["value"] = "No Rating"
+        # RT
+        try:
+            embed_dic["fields"][1]["value"] = OMDb_data["Ratings"][1]["Value"]
+        except IndexError:
+            embed_dic["fields"][1]["value"] = "No Rating"
+        # Image
+        embed_dic["image"]["url"] = OMDb_data["Poster"]
+
+        self.set_embed(embed_dic)
+
+    # API Request from OMDb
+    def get_OMDb_data(self, film):
+        if self.year_check(film):
+            movie = ' '.join(film.split()[:-1])
+            year = film.split()[-1]
+            r = requests.get(INFO_YEAR_URL.format(movie=movie, year=year, key=KEY)).json()
+            return r
+        else:
+            r = requests.get(INFO_URL.format(movie=film, key=KEY)).json()
+            return r
+
+    def year_check(self, film):
+        year = film.split()[-1]
+        if len(year) == 4 and year.isnumeric():
+            return True
+

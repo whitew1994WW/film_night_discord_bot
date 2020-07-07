@@ -4,13 +4,12 @@
     - [X] Film time set/get
     - [X] Film date set/get
     - [X] Magnet set/get
-        - [X] React to bot message to get magnet sent through DMs
-    - [ ] Movie details
-        - [ ] trailer
-        - [ ] imdb/rotten tomatoes/wiki
-    - [ ] Film info, returns all information added to film object
-- [ ] Film tickets
+    - [X] Movie details
+        - [X] imdb/rotten tomatoes/wiki
+    - [X] Film info, returns all information added to film object
+    - [ ] Film trailer request
     ###### So we know who wants to attend a film
+- [ ] Film tickets
     - [X] by adding a reaction to a film post
     - [X] by using a 'purchase ticket command'
     - [ ] Refund ticket function: WIP, currently errors loading an empty list back into json
@@ -32,6 +31,6 @@
     - [ ] Change to using dictionary, as there errors in the dic <> json interface
         - [ ] Use pickle, or alternative as a store
 - [ ] Allow for multiple channels to use the bot
-- [ ] Refactor: move parameter & arg check to commands as the command should dictate
-it's own rules for it's parameter requirements
+- [ ] Refactor: move parameter & arg check to commands as the command should dictateit's own rules for it's parameter requirements
 - [ ] Update README.md
+
