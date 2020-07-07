@@ -1,5 +1,3 @@
-import io
-import json
 import os
 import requests
 from datetime import datetime
@@ -9,14 +7,12 @@ from commands.base_command import BaseCommand
 
 KEY = 'a445191a'
 INFO_URL = 'http://www.omdbapi.com/?t={movie}&apikey={key}&'
-
+INFO_YEAR_URL = 'http://www.omdbapi.com/?t={movie}&y={year}&apikey={key}&'
 
 class SetFilm(BaseCommand):
     def __init__(self):
         description = "Sets the details for the upcoming movie night"
         params = ['Film Name']
-        self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
-        self.save_embdict_location = os.path.join(settings.BASE_DIR, 'data', 'embed_file.json')
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
@@ -43,7 +39,7 @@ class SetFilm(BaseCommand):
             return OMDb_data['Error']
         embed_dic = self.get_embed()
         # Title
-        embed_dic["title"] = film
+        embed_dic["title"] = ' '.join(film.split()[:-1])
         # URL
         embed_dic["url"] = "https://www.imdb.com/title/{}/".format(OMDb_data["imdbID"])
         # Year, Director and Summary
@@ -66,5 +62,16 @@ class SetFilm(BaseCommand):
 
     # API Request from OMDb
     def get_OMDb_data(self, film):
-        r = requests.get(INFO_URL.format(movie=film, key=KEY)).json()
-        return r
+        if self.year_check(film):
+            movie = ' '.join(film.split()[:-1])
+            year = film.split()[-1]
+            r = requests.get(INFO_YEAR_URL.format(movie=movie, year=year, key=KEY)).json()
+            return r
+        else:
+            r = requests.get(INFO_URL.format(movie=film, key=KEY)).json()
+            return r
+
+    def year_check(self, film):
+        year = film.split()[-1]
+        if len(year) == 4 and year.isnumeric():
+            return True

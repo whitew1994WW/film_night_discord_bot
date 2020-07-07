@@ -10,28 +10,23 @@ class SetDay(BaseCommand):
     def __init__(self):
         description = "Updates the scheduled day for the film"
         params = ['day']
-        self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
-        self.save_embdict_location = os.path.join(settings.BASE_DIR, 'data', 'embed_file.json')
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
-
-        filmday = self.set_day(params)
-        msg = filmday
+        msg = self.set_day(params)
         await message.channel.send(msg)
 
-    def set_day(self, params):
-        info = self.get_info()
-        embed_dic = self.get_embed()
-        setday = ''.join(params).capitalize()
+    def set_day(self, setday):
+
+        setday = ''.join(setday).capitalize()
         datenow = dt.date.today()
         todayint = datenow.weekday()
+
         try:
             if len(setday) < 6:
                 setdayint = list(calendar.day_abbr).index(setday)
             else:
                 setdayint = list(calendar.day_name).index(setday)
-
         except ValueError:
             return "{} is not a day dummy.".format(setday)
 
@@ -40,21 +35,22 @@ class SetDay(BaseCommand):
         else:
             daydelt = 7 - (todayint - setdayint)
 
-        filmdate = datenow + dt.timedelta(days=daydelt)
-        filmdate = filmdate.strftime('%A %d, %b %Y')
+        new_date = datenow + dt.timedelta(days=daydelt)
+        new_date = new_date.strftime('%A %d, %b %Y')
 
-        info['film_date'] = filmdate
+        info = self.get_info()
+        embed_dic = self.get_embed()
 
+        info['film_date'] = new_date
         try:
             time = info['film_time']
         except KeyError:
             time = '*No time set*'
-
-        embed_dic["fields"][2]["value"] = "{} - {}".format(time, filmdate)
+        embed_dic["fields"][2]["value"] = "{} - {}".format(time, new_date)
 
         self.set_info(info)
         self.set_embed(embed_dic)
 
-        return 'Film is scheduled for {}'.format(filmdate)
+        return 'Film is scheduled for {}'.format(new_date)
 
 

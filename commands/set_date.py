@@ -2,7 +2,7 @@ from commands.base_command import BaseCommand
 import settings
 import os, io
 import json
-from datetime import datetime
+import datetime as dt
 
 
 class SetDate(BaseCommand):
@@ -13,10 +13,7 @@ class SetDate(BaseCommand):
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
-
-        film_deets = self.set_date(params[0])
-        msg = "{role} \n\n{film_name} has been set for {film_date}" \
-              "at {film_time}.\n ".format(role=settings.AUDIENCE, **film_deets)
+        msg = self.set_date(params)
         await message.channel.send(msg)
 
     def get_film_deets(self):
@@ -24,14 +21,25 @@ class SetDate(BaseCommand):
             film_deets = json.load(f)
         return film_deets
 
-    def set_date(self, new_date):
-        film_deets = self.get_film_deets()
-        try:
-            datetime.strptime(new_date, "%d/%m/%Y")
-        except ValueError:
-            return "Please provide the date in the format 'DD/MM/YYYY'"
+    def set_date(self, set_date):
 
-        film_deets['film_date'] = new_date
-        with io.open(self.save_dict_location, 'w') as f:
-            f.write(json.dumps(film_deets))
-        return film_deets
+        try:
+            set_date = dt.datetime.strptime(''.join(set_date), "%d/%m/%y")
+        except ValueError:
+            return "DD/MM/YY format required"
+
+        new_date = set_date.strftime('%A %d, %b %Y')
+        info = self.get_info()
+        embed_dic = self.get_embed()
+
+        info['film_date'] = new_date
+        try:
+            time = info['film_time']
+        except KeyError:
+            time = '*No time set*'
+        embed_dic["fields"][2]["value"] = "{} - {}".format(time, new_date)
+
+        self.set_info(info)
+        self.set_embed(embed_dic)
+
+        return 'Film is scheduled for {}'.format(new_date)

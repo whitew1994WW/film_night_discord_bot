@@ -15,20 +15,25 @@ class SetTime(BaseCommand):
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
-
-        film_deets = self.set_time(params[0])
-        msg = "{role} \n\n{film_name} has been set for {film_date}" \
-              "at {film_time}.\n ".format(role=settings.AUDIENCE, **film_deets)
+        new_time = ' '.join(params)
+        msg = self.set_time(new_time)
         await message.channel.send(msg)
 
     def set_time(self, new_time):
+
         info = self.get_info()
         embed_dic = self.get_embed()
+
+        info['film_time'] = new_time
+
         try:
-            datetime.strptime(new_time, "%I:%M %p %Z")
-        except ValueError:
-            return "Please provide the time in the format '1:00 PM GMT'"
-        film_deets['film_time'] = new_time
-        with io.open(self.save_dict_location, 'w') as f:
-            f.write(json.dumps(film_deets))
-        return film_deets
+            date = info['film_date']
+        except KeyError:
+            date = '*No date set*'
+
+        embed_dic["fields"][2]["value"] = "{} - {}".format(new_time, date)
+
+        self.set_info(info)
+        self.set_embed(embed_dic)
+
+        return 'Film is scheduled for {}'.format(new_time)

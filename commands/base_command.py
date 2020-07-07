@@ -32,6 +32,3 @@ class BaseCommand:
     def set_embed(self, info):
         with open(self.save_embdict_location, 'w') as f:
             f.write(json.dumps(info, indent= 1))
-
-    async def handle(self, params, message, client):
-        raise NotImplementedError  # To be defined by every command

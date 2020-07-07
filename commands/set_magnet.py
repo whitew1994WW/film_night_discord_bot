@@ -10,7 +10,6 @@ class SetMagnet(BaseCommand):
     def __init__(self):
         description = "Updates the magnet of the film"
         params = ['new_magnet_link']
-        self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
