@@ -28,7 +28,7 @@ class SetFilm(BaseCommand):
     def store_films(self, film):
 
         info = self.get_info()
-        info['Name'] = film
+        info['name'] = film
         self.set_info(info)
 
         return "{} \n\nNext film is set to {}".format(settings.AUDIENCE, film)
