@@ -20,9 +20,9 @@
       ],
       "portMappings": [
         {
-          "hostPort": 80,
+          "hostPort": 640,
           "protocol": "tcp",
-          "containerPort": 80
+          "containerPort": 640
         }
       ],
       "command": [
