@@ -1,6 +1,3 @@
-import io
-import json
-import os
 from datetime import datetime
 
 import settings
@@ -11,10 +8,10 @@ class SetTime(BaseCommand):
     def __init__(self):
         description = "Updates the time of the film"
         params = ['new_time']
-        self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
+      
         new_time = ' '.join(params)
         msg = self.set_time(new_time)
         await message.channel.send(msg)
@@ -24,10 +21,10 @@ class SetTime(BaseCommand):
         info = self.get_info()
         embed_dic = self.get_embed()
 
-        info['film_time'] = new_time
+        info['time'] = new_time
 
         try:
-            date = info['film_date']
+            date = info['date']
         except KeyError:
             date = '*No date set*'
 
@@ -37,3 +34,4 @@ class SetTime(BaseCommand):
         self.set_embed(embed_dic)
 
         return 'Film is scheduled for {}'.format(new_time)
+

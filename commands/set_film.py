@@ -1,5 +1,6 @@
 import os
 import requests
+
 from datetime import datetime
 
 import settings
@@ -27,7 +28,7 @@ class SetFilm(BaseCommand):
     def store_films(self, film):
 
         info = self.get_info()
-        info['film_name'] = film
+        info['Name'] = film
         self.set_info(info)
 
         return "{} \n\nNext film is set to {}".format(settings.AUDIENCE, film)
@@ -75,3 +76,4 @@ class SetFilm(BaseCommand):
         year = film.split()[-1]
         if len(year) == 4 and year.isnumeric():
             return True
+

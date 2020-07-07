@@ -2,6 +2,7 @@ import settings
 import os
 import json
 
+
 class BaseCommand:
 
     def __init__(self, description, params):
@@ -9,6 +10,7 @@ class BaseCommand:
         self.params = params
         self.save_dict_location = os.path.join(settings.BASE_DIR, 'data', 'current_film.json')
         self.save_embdict_location = os.path.join(settings.BASE_DIR, 'data', 'embed_file.json')
+
         desc = f"**{settings.COMMAND_PREFIX} {self.name}**"
 
         if self.params:

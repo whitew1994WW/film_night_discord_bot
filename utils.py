@@ -40,6 +40,31 @@ def get_channel(client, value, attribute="name"):
     return channel
 
 
+def get_user(message):
+    """
+    :param message:
+    :return:user (string)
+    """
+    try:
+        # see https://discordpy.readthedocs.io/en/latest/api.html#member
+        name = message.author.name
+    except:
+        # see https://discordpy.readthedocs.io/en/latest/api.html#user
+        name = message.author.nick
+    return name
+
+
+def audience_list(names):
+    n = len(names)
+    return {
+        0: 'No audience member yet',
+        1: '{} will be in the audience',
+        2: '{} will join {} in the audience',
+        3: '{} will join {} and {} like this',
+        4: '{} will join {} and {} in the audience'
+    }[min(4, n)].format(*names)
+
+
 async def send_in_channel(client, channel_name, *args):
     """Shortcut method to send a message in a channel with a certain name
     You can pass more positional arguments to send_message
@@ -48,4 +73,3 @@ async def send_in_channel(client, channel_name, *args):
     """
     # TODO need to migrate to new discord.py
     await client.send_message(get_channel(client, channel_name), *args)
-
