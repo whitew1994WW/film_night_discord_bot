@@ -1,7 +1,12 @@
 {
- "name": "yes wide shut",
- "magnet": "www.filmmagnet.com",
- "audience": [],
+ "name": "Skyscraper",
+ "magnet": "www.notamagnet.com",
+ "audience": [
+  "Wattsit",
+  "gorgio",
+  "Fr3Runn3r"
+ ],
  "date": "06/07/2020",
- "time": "2:00 PM GMT"
+ "time": "16:00",
+ "film_date": "Friday 10, Jul 2020"
 }

@@ -28,10 +28,11 @@ class SetFilm(BaseCommand):
     def store_films(self, film):
 
         info = self.get_info()
+        embed_dic = self.get_embed()
         info['name'] = film
         self.set_info(info)
 
-        return "{} \n\nNext film is set to {}".format(settings.AUDIENCE, film)
+        return "{} \n\nNext film is set to {}".format(settings.MOVIE_NIGHT_ROLE, embed_dic["title"])
 
     def embed_gen(self, film):
         # Pull film data from OMDb
@@ -40,7 +41,7 @@ class SetFilm(BaseCommand):
             return OMDb_data['Error']
         embed_dic = self.get_embed()
         # Title
-        embed_dic["title"] = ' '.join(film.split()[:-1])
+        embed_dic["title"] = OMDb_data["Title"]
         # URL
         embed_dic["url"] = "https://www.imdb.com/title/{}/".format(OMDb_data["imdbID"])
         # Year, Director and Summary
