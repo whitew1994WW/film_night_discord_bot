@@ -1,7 +1,7 @@
 - [ ] Film Polling
     ###### If anyone wants help with a film suggestion
 - [ ] Film object
-    - [ ] Film time set/get
+    - [X] Film time set/get
     - [X] Film date set/get
     - [X] Magnet set/get
     - [X] Movie details
