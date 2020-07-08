@@ -69,11 +69,6 @@
   "placementConstraints": [],
   "memory": "512",
   "taskRoleArn": null,
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-2:723395350372:task-definition/first-run-task-definition:1",
   "family": "first-run-task-definition",
   "requiresAttributes": [
     {
@@ -119,8 +114,6 @@
   ],
   "networkMode": "host",
   "cpu": "256",
-  "revision": 1,
-  "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
   "volumes": []
