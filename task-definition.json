@@ -31,7 +31,7 @@
           "containerPort": 443
         }
       ],
-      "command": [],
+      "command": ['python your_bot.py'],
       "linuxParameters": null,
       "cpu": 256,
       "environment": [],
@@ -73,7 +73,7 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-2:723395350372:task-definition/first-run-task-definition:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-2:723395350372:task-definition/first-run-task-definition",
   "family": "first-run-task-definition",
   "requiresAttributes": [
     {
@@ -117,7 +117,7 @@
   "requiresCompatibilities": [
     "FARGATE"
   ],
-  "networkMode": "awsvpc",
+  "networkMode": "host",
   "cpu": "256",
   "revision": 1,
   "status": "ACTIVE",
