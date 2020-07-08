@@ -117,7 +117,7 @@
   "requiresCompatibilities": [
     "EC2"
   ],
-  "networkMode": "bridge",
+  "networkMode": "host",
   "cpu": "256",
   "revision": 1,
   "status": "ACTIVE",
