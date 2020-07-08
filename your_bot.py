@@ -31,7 +31,7 @@ def main(testing=False):
         BOT_TOKEN = settings.BOT_TOKEN
     except IndexError:
         BOT_TOKEN = settings.BOT_TOKEN
-    print(BOT_TOKEN)
+    raise ValueError(BOT_TOKEN)
     # Define event handlers for the client
     # on_ready may be called multiple times in the event of a reconnect,
     # hence the running flag
