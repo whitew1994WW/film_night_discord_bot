@@ -55,4 +55,4 @@ jobs:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: film-bot2
         cluster: film-bot2
-        wait-for-service-stability: true
+        wait-for-service-stability: false
