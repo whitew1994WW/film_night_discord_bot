@@ -115,7 +115,7 @@
   ],
   "pidMode": null,
   "requiresCompatibilities": [
-    "FARGATE"
+    "EC2"
   ],
   "networkMode": "host",
   "cpu": "256",
