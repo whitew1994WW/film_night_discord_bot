@@ -31,7 +31,7 @@ def main(testing=False):
         BOT_TOKEN = settings.BOT_TOKEN
     except IndexError:
         BOT_TOKEN = settings.BOT_TOKEN
-    raise ValueError(BOT_TOKEN)
+
     # Define event handlers for the client
     # on_ready may be called multiple times in the event of a reconnect,
     # hence the running flag
@@ -107,7 +107,7 @@ def main(testing=False):
         """Assumes the client has filled cached messages"""
         await common_reaction_handler(reaction, user)
 
-    client.run(settings.BOT_TOKEN)
+    client.run(BOT_TOKEN)
 
 
 if __name__ == "__main__":
