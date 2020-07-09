@@ -6,8 +6,8 @@ COMMAND_PREFIX = "--"
 # Which role to mention in comments.
 # Hard coded for testing, with the role ID which can
 # be retrieved by typing in discord: \@RequiredRole
-MOVIE_NIGHT_ROLE = "<@&727544315731116083>" # nerd herd
-# AUDIENCE = "<@&552462297487114241>"  # the group
+# MOVIE_NIGHT_ROLE = "<@&727544315731116083>" # nerd herd
+MOVIE_NIGHT_ROLE = "<@&552462297487114241>"  # the group
 
 BOT_TOKEN = token
 
