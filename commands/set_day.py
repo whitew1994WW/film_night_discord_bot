@@ -41,9 +41,9 @@ class SetDay(BaseCommand):
         info = self.get_info()
         embed_dic = self.get_embed()
 
-        info['film_date'] = new_date
+        info['date'] = new_date
         try:
-            time = info['film_time']
+            time = info['time']
         except KeyError:
             time = '*No time set*'
         embed_dic["fields"][2]["value"] = "{} - {}".format(time, new_date)
