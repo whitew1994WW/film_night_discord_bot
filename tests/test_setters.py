@@ -6,6 +6,7 @@ from commands.set_time import SetTime
 import os
 import json
 
+
 class TestSetters(unittest.TestCase):
     def setUp(self):
         self.class_obj = SetFilm()

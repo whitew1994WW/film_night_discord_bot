@@ -1,9 +1,6 @@
 from commands.base_command import BaseCommand
-import settings
-import os, io
 import json
 import datetime as dt
-
 
 
 class SetDate(BaseCommand):

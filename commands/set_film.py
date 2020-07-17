@@ -1,14 +1,11 @@
-import os
 import requests
-
-from datetime import datetime
-
 import settings
 from commands.base_command import BaseCommand
 
 KEY = 'a445191a'
 INFO_URL = 'http://www.omdbapi.com/?t={movie}&apikey={key}&'
 INFO_YEAR_URL = 'http://www.omdbapi.com/?t={movie}&y={year}&apikey={key}&'
+
 
 class SetFilm(BaseCommand):
     def __init__(self):
@@ -77,4 +74,3 @@ class SetFilm(BaseCommand):
         year = film.split()[-1]
         if len(year) == 4 and year.isnumeric():
             return True
-

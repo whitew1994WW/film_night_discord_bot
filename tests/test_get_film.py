@@ -4,6 +4,7 @@ from commands.get_film import GetFilm
 import os
 import json
 
+
 class TestGetFilm(unittest.TestCase):
     def setUp(self):
         self.set_film_class_obj = SetFilm()
