@@ -3,6 +3,7 @@ from commands.set_film import SetFilm
 import os
 import json
 
+
 class TestSetFilm(unittest.TestCase):
     def setUp(self):
         self.class_obj = SetFilm()

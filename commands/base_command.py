@@ -25,7 +25,7 @@ class BaseCommand:
 
     def set_info(self, info):
         with open(self.save_dict_location, 'w') as f:
-            f.write(json.dumps(info, indent= 1))
+            f.write(json.dumps(info, indent=1))
 
     def get_embed(self):
         with open(self.save_embdict_location) as f:
@@ -33,4 +33,4 @@ class BaseCommand:
 
     def set_embed(self, info):
         with open(self.save_embdict_location, 'w') as f:
-            f.write(json.dumps(info, indent= 1))
+            f.write(json.dumps(info, indent=1))

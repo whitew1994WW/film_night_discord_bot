@@ -1,5 +1,4 @@
 from datetime import datetime
-
 import settings
 from commands.base_command import BaseCommand
 
@@ -11,7 +10,6 @@ class SetTime(BaseCommand):
         super().__init__(description, params)
 
     async def handle(self, params, message, client):
-      
         new_time = ' '.join(params)
         msg = self.set_time(new_time)
         await message.channel.send(msg)
@@ -34,4 +32,3 @@ class SetTime(BaseCommand):
         self.set_embed(embed_dic)
 
         return 'Film is scheduled for {}'.format(new_time)
-

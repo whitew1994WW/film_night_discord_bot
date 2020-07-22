@@ -1,7 +1,4 @@
 from commands.base_command import BaseCommand
-import settings
-import os, io
-import json
 import datetime as dt
 import calendar
 
@@ -52,5 +49,3 @@ class SetDay(BaseCommand):
         self.set_embed(embed_dic)
 
         return 'Film is scheduled for {}'.format(new_date)
-
-

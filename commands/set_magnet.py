@@ -13,7 +13,7 @@ class SetMagnet(BaseCommand):
         info = self.set_magnet(params[0].split('&tr')[0])
 
         msg = f"{MOVIE_NIGHT_ROLE} \n\nLink has been added for {info['name']}:\n " \
-              f"```{info['magnet']}```"
+            f"```{info['magnet']}```"
         await message.channel.send(msg)
 
     def set_magnet(self, new_magnet):

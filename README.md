@@ -9,7 +9,7 @@ Check [example_command.py](https://github.com/agubelu/discord-bot-template/blob/
 
 ## Pre-requisites
 - Python >= 3.6 (though you can use 3.5 if you remove the [f-strings](https://docs.python.org/3/whatsnew/3.6.html#whatsnew36-pep498))
-- You need to [register your bot and get a Discord API token](https://discordapp.com/developers/applications/me).
+- You need to [register your bot and get a Discord API token](https://discord.com/developers/applications/me).
 - You should be at least familiar with Python 3 and with the basics of the [discord.py](https://github.com/Rapptz/discord.py) [(docs)](https://discordpy.readthedocs.io/en/latest/) library.
 - You should also have some basic knowledge about what asynchronous programming is and [how it works in Python](https://snarky.ca/how-the-heck-does-async-await-work-in-python-3-5/), but to be fairly honest you don't really have to in order to make this thing work. You can just throw in `async` or `await` whenever Python complains.
 - You should know what a `virtualenv` is and how to set up one. Check [this](http://docs.python-guide.org/en/latest/dev/virtualenvs/#lower-level-virtualenv) out if the file name `requirements.txt` doesn't speak to you.
